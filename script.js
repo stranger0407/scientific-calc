@@ -86,10 +86,10 @@ class ScientificCalculator {
   // Input handling functions
   backSpaceEventHandler(e) {
     if (e.key === "Backspace") {
-      this.inputStr = this.inputStr.slice(0, -1);
-      this.displayStr = this.displayStr.slice(0, -1);
-      this.updateDisplay();
+     this.backspace();
     }
+
+
   }
 
   keyPressEventHandler(e) {
@@ -236,6 +236,13 @@ class ScientificCalculator {
   }
 
   backspace() {
+    if(!this.inputStr){
+        return;
+    }
+    if(this.inputStr===this.ERROR ||this.inputStr===this.ERROR_INPUT){
+      this.clearCalc();
+      return;
+    }
     if (this.inputStr.endsWith("**")) {
       this.inputStr = this.inputStr.slice(0, -2);
       this.displayStr = this.displayStr.slice(0, -1);
@@ -586,9 +593,6 @@ class ScientificCalculator {
   createHistoryPanel() {
     let panel = document.createElement("div");
     panel.className = "history-panel";
-    panel.style.cssText =
-      "position: absolute; right: 10px; top: 10px; background: white; border: 1px solid #ccc; padding: 10px; max-height: 300px; overflow-y: auto;";
-
     document.querySelector(".calculator").appendChild(panel);
     this.renderHistoryPanel();
   }
